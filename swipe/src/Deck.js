@@ -1,10 +1,26 @@
 import React from 'react';
 import {
     View,
-    Animated
+    Animated,
+    PanResponder
 } from 'react-native';
 
 class Deck extends React.Component {
+    constructor(props) {
+        super(props);
+
+        const panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: () => true,
+            onPanResponderMove: (event, gesture) => {
+
+            },
+            onPanResponderRelease: () => {}
+        });
+
+        this.state = {
+            panResponder
+        }
+    }
     /**
      * Loops through each data object and calls the renderCard method which
      * was passed in via props
@@ -17,7 +33,7 @@ class Deck extends React.Component {
 
     render() {
         return (
-            <View>
+            <View {...this.state.panResponder.panHandlers}>
                 { this.renderCards() }
             </View>
         )
