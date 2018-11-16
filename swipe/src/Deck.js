@@ -6,8 +6,9 @@ import {
     Dimensions
 } from 'react-native';
 
-const SCREEN_WIDTH = Dimensions.get('window').width
-const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH // 1/4 of the screen
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH; // 1/4 of the screen
+const SWIPE_OUT_DURATION = 250;
 
 class Deck extends React.Component {
     constructor(props) {
@@ -17,17 +18,17 @@ class Deck extends React.Component {
         const panResponder = PanResponder.create({
             onStartShouldSetPanResponder: () => true,
             onPanResponderMove: (event, gesture) => {
-                // dx & dy are the users current touch location
+                // dx & dy are the users current touch location, for now only using dx as I don't want Y movement
                 position.setValue({ x: gesture.dx });
             },
             onPanResponderRelease: (event, gesture) => {
                 if (gesture.dx > SWIPE_THRESHOLD) {
-                    console.log("swipe right");
+                    this.forceSwipe('right');
                 } else if (gesture.dx < -SWIPE_THRESHOLD) {
-                    console.log("swipe left");
+                    this.forceSwipe('left');
+                } else {
+                    this.resetPosition();
                 }
-
-                this.resetPosition();
             }
         });
 
@@ -52,6 +53,14 @@ class Deck extends React.Component {
     resetPosition() {
         Animated.spring(this.state.position, {
             toValue: { x: 0, y: 0 }
+        }).start();
+    }
+
+    forceSwipe(direction) {
+        const x = direction === 'right' ? SCREEN_WIDTH * 1.2 : -SCREEN_WIDTH * 1.2
+        Animated.timing(this.state.position, {
+            toValue: { x, y: 0 },
+            duration: SWIPE_OUT_DURATION
         }).start();
     }
 
