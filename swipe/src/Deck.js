@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width
+const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH // 1/4 of the screen
 
 class Deck extends React.Component {
     constructor(props) {
@@ -17,9 +18,17 @@ class Deck extends React.Component {
             onStartShouldSetPanResponder: () => true,
             onPanResponderMove: (event, gesture) => {
                 // dx & dy are the users current touch location
-                position.setValue({ x: gesture.dx, y: gesture.dy });
+                position.setValue({ x: gesture.dx });
             },
-            onPanResponderRelease: () => {}
+            onPanResponderRelease: (event, gesture) => {
+                if (gesture.dx > SWIPE_THRESHOLD) {
+                    console.log("swipe right");
+                } else if (gesture.dx < -SWIPE_THRESHOLD) {
+                    console.log("swipe left");
+                }
+
+                this.resetPosition();
+            }
         });
 
         this.state = {
@@ -38,6 +47,12 @@ class Deck extends React.Component {
             ...position.getLayout(), // spread operator (...) take all the different properites and add all the properties to the return
             transform:[{ rotate }]
         };
+    }
+
+    resetPosition() {
+        Animated.spring(this.state.position, {
+            toValue: { x: 0, y: 0 }
+        }).start();
     }
 
     /**
