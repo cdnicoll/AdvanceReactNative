@@ -5,6 +5,10 @@ import {
 } from 'react-native';
 
 class Deck extends React.Component {
+    /**
+     * Loops through each data object and calls the renderCard method which
+     * was passed in via props
+     */
     renderCards() {
         return this.props.data.map(item => {
             return this.props.renderCard(item);

@@ -19,8 +19,11 @@ const DATA = [
 
 export default class App extends React.Component {
   /**
-   * Called each time per card, we pass this into the Deck component as a prop
-   * @param {*} item
+   * Passed into the Deck component. This will handle how each card looks.
+   * When passed in, we call on this method for each card within the deck.
+   *
+   * @param json object
+   * @returns jsx markup
    */
   renderCard(item) {
     return (
