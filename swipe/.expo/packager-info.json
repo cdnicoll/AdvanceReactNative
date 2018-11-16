@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 29303,
   "expoServerNgrokUrl": "https://ua-qyn.cdnicoll.swipe.exp.direct",
   "packagerNgrokUrl": "https://packager.ua-qyn.cdnicoll.swipe.exp.direct",
-  "ngrokPid": 19881
+  "ngrokPid": 29324
 }
