@@ -12,10 +12,10 @@ const SWIPE_OUT_DURATION = 250;
 
 class Deck extends React.Component {
     // Class property of default props
-    // static defaultProps = {
-    //     onSwipeRight: () => {},
-    //     onSwipeLeft: () => {}
-    // }
+    static defaultProps = {
+        onSwipeRight: () => {},
+        onSwipeLeft: () => {}
+    }
 
     constructor(props) {
         super(props);
@@ -90,6 +90,8 @@ class Deck extends React.Component {
         // NOTE: data is defined on the above line
         const item = data[this.state.index]
         direction === 'right' ? onSwipeRight(item) : onSwipeLeft(item)
+        this.state.position.setValue({ x: 0, y: 0 });
+        this.setState({ index: this.state.index + 1 });
     }
 
     /**
@@ -97,8 +99,13 @@ class Deck extends React.Component {
      * was passed in via props
      */
     renderCards() {
-        return this.props.data.map((item, index) => {
-            if (index === 0) {
+        return this.props.data.map((item, i) => {
+            if (i < this.state.index) {
+                // these cards have already been swiped
+                return null
+            }
+
+            if (i === this.state.index) {
                 return (
                     <Animated.View
                         key={item.id}
@@ -109,6 +116,7 @@ class Deck extends React.Component {
                     </Animated.View>
                 );
             }
+
             return this.props.renderCard(item);
         });
     }
