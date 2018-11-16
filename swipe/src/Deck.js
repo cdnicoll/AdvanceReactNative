@@ -18,7 +18,8 @@ class Deck extends React.Component {
         const panResponder = PanResponder.create({
             onStartShouldSetPanResponder: () => true,
             onPanResponderMove: (event, gesture) => {
-                // dx & dy are the users current touch location, for now only using dx as I don't want Y movement
+                // dx & dy are the users current touch location,
+                // for now only using dx as I don't want Y movement
                 position.setValue({ x: gesture.dx });
             },
             onPanResponderRelease: (event, gesture) => {
@@ -34,7 +35,8 @@ class Deck extends React.Component {
 
         this.state = {
             panResponder,
-            position
+            position,
+            index: 0
         }
     }
 
@@ -50,18 +52,38 @@ class Deck extends React.Component {
         };
     }
 
+    /**
+     * Resets a card to its original state
+     */
     resetPosition() {
         Animated.spring(this.state.position, {
             toValue: { x: 0, y: 0 }
         }).start();
     }
 
+    /**
+     * Force swipes a card left or right if it's position is far enough over.
+     *
+     * @param {String} direction
+     */
     forceSwipe(direction) {
         const x = direction === 'right' ? SCREEN_WIDTH * 1.2 : -SCREEN_WIDTH * 1.2
         Animated.timing(this.state.position, {
             toValue: { x, y: 0 },
             duration: SWIPE_OUT_DURATION
-        }).start();
+        }).start(() => this.onSwipeComplete(direction));
+    }
+
+    /**
+     * Once the swipe is completed, we call the callback passed in via props
+     *
+     * @param {String} direction
+     */
+    onSwipeComplete(direction) {
+        const { onSwipeLeft, onSwipeRight, data } = this.props;
+        // NOTE: data is defined on the above line
+        const item = data[this.state.index]
+        direction === 'right' ? onSwipeRight(item) : onSwipeLeft(item)
     }
 
     /**
