@@ -11,6 +11,12 @@ const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH; // 1/4 of the screen
 const SWIPE_OUT_DURATION = 250;
 
 class Deck extends React.Component {
+    // Class property of default props
+    // static defaultProps = {
+    //     onSwipeRight: () => {},
+    //     onSwipeLeft: () => {}
+    // }
+
     constructor(props) {
         super(props);
 
