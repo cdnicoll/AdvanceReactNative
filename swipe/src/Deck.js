@@ -97,8 +97,14 @@ class Deck extends React.Component {
     /**
      * Loops through each data object and calls the renderCard method which
      * was passed in via props
+     *
+     * ?? How is this called each time?
      */
     renderCards() {
+        if (this.state.index >= this.props.data.length) {
+            return this.props.renderNoMoreCards();
+        }
+
         return this.props.data.map((item, i) => {
             if (i < this.state.index) {
                 // these cards have already been swiped
