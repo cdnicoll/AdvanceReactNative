@@ -1,5 +1,6 @@
 # project hidden files
 service_account.json
+twilio_account.json
 
 # OS garbage, Editors, IDEs, etc
 .DS_Store
