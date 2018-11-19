@@ -16,5 +16,3 @@ module.exports = function(req, res) {
 
     // Respond to the user request saying the account was made
 }
-
-
