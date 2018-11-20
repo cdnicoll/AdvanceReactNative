@@ -37,6 +37,8 @@ class SignupForm extends React.Component {
                         onChangeText={phone => this.setState({ phone })}
                     />
                     <Button
+                        backgroundColor='#03A9F4'
+                        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
                         title="Submit"
                         onPress={ this.handleSubmit }
                     />
