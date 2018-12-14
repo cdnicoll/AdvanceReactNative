@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "firebase-auth",
-    "description": "This project is really great.",
+    "description": "Udemy project for Advance React Native",
     "slug": "firebase-auth",
     "privacy": "public",
     "sdkVersion": "31.0.0",
@@ -25,6 +25,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "githubUrl": "https://github.com/cdnicoll/AdvanceReactNative"
   }
 }
